@@ -1,0 +1,57 @@
+
+<div style="text-align: right; margin-bottom: 10px;">
+<p-button label="Create"  routerLink="/create-vehicle"></p-button>
+</div>
+<div class="card list" >
+    <p-table
+        #dt
+        [value]="vehicleList"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['make', 'model', 'year', 'vin']"
+        [lazy]="true"
+        (onLazyLoad)="loadVehicleList($event)"
+        dataKey="id"
+        [tableStyle]="{ 'min-width': '75rem'}"
+        [rows]="10"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+    
+    >
+    <ng-template pTemplate="caption">
+        <div style="text-align: right;">
+            <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text"  placeholder="Search keyword" [(ngModel)]="searchKey" (ngModelChange)="search($event)"  />
+            </span>
+
+        </div>
+
+    </ng-template>
+    
+        <ng-template pTemplate="header">
+            <tr>
+                <th >make </th>
+                <th >model </th>
+                <th >year</th>
+                <th >vin</th>
+                <th>Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-vehicle>
+            <tr>
+                <td>{{ vehicle.make }}</td>              
+                <td>{{ vehicle.model }}</td>
+                <td>{{ vehicle.year }}</td>
+                <td>{{ vehicle.vin }}</td>
+                    <td>
+                        <button pButton class="p-mr-1 p-button-warning" icon="pi pi-pencil" type="submit"
+                           style="margin: 0 8px 0 8px !important" routerLink="{{'/vehicle/'+vehicle.id}}"></button>
+                        <button class="p-button-danger" pButton icon="pi pi-trash" type="submit"
+                            (click)="deleteVehicle(vehicle.id)"></button>
+                    </td>
+                
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

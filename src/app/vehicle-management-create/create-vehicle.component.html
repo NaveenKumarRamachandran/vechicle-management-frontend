@@ -1,0 +1,34 @@
+<p-card header="{{ vehicleId ? 'Edit vehicle' : 'Create vehicle' }}">
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()">
+    <div class="p-grid p-fluid">
+      <div class="p-col-12 p-md-4">
+        <label for="make">Make</label>
+        <input pInputText type="text" id="make" formControlName="make"
+          [ngClass]=" vehicleForm.get('make')?.errors ?  'ng-dirty' : '' " required />
+      </div>
+      <div class="p-col-12 p-md-4">
+        <label for="model">Model</label>
+        <input pInputText type="text" id="model" formControlName="model"
+          [ngClass]=" vehicleForm.get('model')?.errors ?  'ng-dirty' : '' " required />
+      </div>
+      <div class="p-col-12 p-md-4">
+        <label for="year">Year</label>
+        <input pInputText type="number" id="year" formControlName="year"
+          [ngClass]=" vehicleForm.get('year')?.errors ?  'ng-dirty' : '' " required />
+      </div>
+      <div class="p-col-12">
+        <label for="vin">VIN</label>
+        <input pInputText type="text" id="vin" formControlName="vin"
+          [ngClass]=" vehicleForm.get('vin')?.errors ?  'ng-dirty' : '' " required />
+      </div>
+    </div>
+    <br>
+
+    <div>
+      <p-button type="submit" label="Submit" [disabled]="!vehicleForm.valid" icon="pi pi-check"></p-button>
+      <p-button label="reset" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"
+        (click)="vehicleForm.reset()"></p-button>
+    </div>
+  </form>
+
+</p-card>
