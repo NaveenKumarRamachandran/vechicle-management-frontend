@@ -6,6 +6,7 @@ import { map } from 'rxjs';
 @Injectable()
 export class VehicleService {
 
+    baseUrl = "http://localhost:5000/api/v1/vehicle";
 
     constructor(private http: HttpClient) { }
 
@@ -15,23 +16,23 @@ export class VehicleService {
         if (params) {
             queryParam = "?key=" + params;
         }
-        return this.http.get<any>('http://localhost:5000/api/v1/vehicle/all' + queryParam).toPromise();
+        return this.http.get<any>(this.baseUrl + '/all' + queryParam).toPromise();
     }
 
     createVehicle(vehicle: Vehicle) {
-        return this.http.post<any>('http://localhost:5000/api/v1/vehicle', { ...vehicle }).pipe(map((res) => res));
+        return this.http.post<any>(this.baseUrl, { ...vehicle }).pipe(map((res) => res));
     }
 
 
     updateVehicle(vehicle: Vehicle) {
-        return this.http.put<any>('http://localhost:5000/api/v1/vehicle', { ...vehicle }).pipe(map((res) => res));
+        return this.http.put<any>(this.baseUrl, { ...vehicle }).pipe(map((res) => res));
     }
 
     getVehicle(key: string) {
-        return this.http.get<any>('http://localhost:5000/api/v1/vehicle?id=' + key);
+        return this.http.get<any>(this.baseUrl + '?id=' + key);
     }
 
     deleteVehicle(id: string) {
-        return this.http.delete<any>('http://localhost:5000/api/v1/vehicle?id=' + id);
+        return this.http.delete<any>(this.baseUrl + '?id=' + id);
     }
 };

@@ -20,8 +20,6 @@ export class ListVehicleComponent implements OnInit {
 
   loading: boolean = false;
 
-  selectedVechiles!: Vehicle[];
-
   vehicleForm!: FormGroup;
 
   searchKey!: string;
@@ -80,7 +78,7 @@ export class ListVehicleComponent implements OnInit {
 
   getVehicleList() {
     this.vehicleService.getAllVehicle().then((res) => {
-      this.selectedVechiles = res;
+      this.vehicleList = res;
     });
   }
 

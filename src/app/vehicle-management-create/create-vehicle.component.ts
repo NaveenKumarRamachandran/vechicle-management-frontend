@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VehicleService } from '../../shared/service/vehicle.service';
 import { MessageService } from 'primeng/api';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-vehicle',
@@ -17,7 +17,9 @@ export class CreateVehicleComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private vehicleService: VehicleService,
     private messageService: MessageService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, 
+    private router: Router
+  ) {
 
     this.route.paramMap.subscribe(params => {
       if (params.get('id')) {
@@ -55,6 +57,7 @@ export class CreateVehicleComponent implements OnInit {
         {
           next: (res: any) => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vehicle created successfully' });
+            this.router.navigateByUrl('list-vehicle');
           },
           error: (error: any) => {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Vehicle creation error ' });
@@ -68,6 +71,7 @@ export class CreateVehicleComponent implements OnInit {
         {
           next: (res: any) => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vehicle updated successfully' });
+            this.router.navigateByUrl('list-vehicle');
           },
           error: (error: any) => {
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Vehicle updated error ' });
