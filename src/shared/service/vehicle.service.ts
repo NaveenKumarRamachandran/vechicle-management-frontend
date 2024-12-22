@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vehicle } from '../../app/vehicle/model/vehicle.model';
-import { map } from 'rxjs';
+import { catchError, map, throwError } from 'rxjs';
 
 @Injectable()
 export class VehicleService {
@@ -10,13 +10,13 @@ export class VehicleService {
 
     constructor(private http: HttpClient) { }
 
-    getAllVehicle(params?: any): Promise<any> {
+    getAllVehicle(params?: any){
         console.log(params);
         let queryParam = "";
         if (params) {
             queryParam = "?key=" + params;
         }
-        return this.http.get<any>(this.baseUrl + '/all' + queryParam).toPromise();
+        return this.http.get<any>(this.baseUrl + '/all' + queryParam).pipe(map((res) => res));
     }
 
     createVehicle(vehicle: Vehicle) {

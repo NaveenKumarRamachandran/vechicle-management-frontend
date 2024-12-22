@@ -40,11 +40,21 @@ export class ListVehicleComponent implements OnInit {
   loadVehicleList(event: any) {
     this.loading = true;
 
-    this.vehicleService.getAllVehicle().then((res) => {
-      this.vehicleList = res;
-      this.totalRecords = res.totalRecords;
-      this.loading = false;
-    });
+    this.vehicleService.getAllVehicle()
+      .subscribe(
+        {
+          next: (res) => {
+            this.vehicleList = res;
+            this.totalRecords = res.totalRecords;
+            this.loading = false;
+          },
+          error: (err) => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error getting result' });
+            this.loading = !this.loading;
+          }
+        }
+      )
+
 
   }
 
@@ -67,24 +77,12 @@ export class ListVehicleComponent implements OnInit {
       {
         next: (res) => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vehicle deleted successfully' });
-          this.getVehicleList();
+         this.loadVehicleList("") 
         },
         error: () => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Vehicle deleted Error' });
         }
       }
     )
-  }
-
-  getVehicleList() {
-    this.vehicleService.getAllVehicle().then((res) => {
-      this.vehicleList = res;
-    });
-  }
-
-  search(event: any) {
-    this.vehicleService.getAllVehicle(event).then((res) => {
-      this.vehicleList = res;
-    });
   }
 }
